@@ -15,12 +15,6 @@ export default function RootLayout({ children }) {
        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9810065319228675"
      crossorigin="anonymous"></Script>
 
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-9810065319228675"
-     data-ad-slot="8567245567"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
 <Script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </Script>
