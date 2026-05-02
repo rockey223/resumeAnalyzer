@@ -21,9 +21,9 @@ export default function RootLayout({ children }) {
      data-ad-slot="8567245567"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
-<script>
+<Script>
      (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+</Script>
       </head>
       <body>
         <GlobalProvider>{children}</GlobalProvider>

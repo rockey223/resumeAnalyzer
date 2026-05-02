@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import AdSenseAd from "./AdSenseAd";
 
 export function HomePage() {
   const router = useRouter();
@@ -171,7 +172,7 @@ export function HomePage() {
           Your data is never stored or shared.
         </p>
       </div>
-
+<AdSenseAd/>
       {/* Footer stats */}
       <div className="flex items-center gap-8 mt-10">
         {[
