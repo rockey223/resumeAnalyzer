@@ -12,12 +12,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-       <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9810065319228675"
-     crossorigin="anonymous"></Script>
+        <Script
+          async
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9810065319228675"
+          crossOrigin="anonymous"
+        />
 
-<Script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</Script>
+        <Script>
+          (adsbygoogle = window.adsbygoogle || []).push({ });
+        </Script>
       </head>
       <body>
         <GlobalProvider>{children}</GlobalProvider>
