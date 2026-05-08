@@ -110,7 +110,7 @@ export function HomePage() {
           <input
             id="file-input"
             type="file"
-            // accept=".pdf"
+            accept=".pdf"
             className="hidden"
             onChange={handleFileChange}
           />
