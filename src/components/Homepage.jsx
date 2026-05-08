@@ -31,6 +31,8 @@ export function HomePage() {
     setIsDragging(false);
     const file = e.dataTransfer.files[0];
     if (file) {
+      setError(null);
+
       setFileName(file.name);
       setFile(file);
     }
@@ -39,6 +41,7 @@ export function HomePage() {
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
+      setError(null);
       setFileName(file.name);
       setFile(file);
     }
