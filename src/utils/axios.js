@@ -14,4 +14,15 @@ axiosInstance.interceptors.request.use(async (config) => {
   return config;
 });
 
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // If the error has a response with data, pass it along
+    if (error.response?.data) {
+      error.message = error.response.data.error || error.response.data.message || error.message;
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;

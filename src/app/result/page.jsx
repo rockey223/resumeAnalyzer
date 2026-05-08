@@ -4,29 +4,6 @@ import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const strengths = [
-  "Strong summary section with clear career objectives",
-  "Quantified achievements with measurable results (e.g., +30% revenue)",
-  "Relevant technical skills clearly listed and organized",
-  "Clean, professional formatting that's ATS-friendly",
-  "Good use of action verbs throughout work experience",
-];
-
-const weaknesses = [
-  "Missing a dedicated projects or portfolio section",
-  "Education section lacks GPA and relevant coursework",
-  "Some job descriptions are too vague — add more context",
-  "No certifications or professional development listed",
-  "Contact info missing LinkedIn and GitHub profile links",
-];
-
-const suggestions = [
-  "Add a Projects section with 2–3 notable personal or team projects",
-  "Include a link to your GitHub and LinkedIn in the header",
-  "Use the STAR method (Situation, Task, Action, Result) for bullet points",
-  "Tailor keywords to match the specific job descriptions you're applying for",
-  "Add relevant certifications (AWS, Google, Coursera) to boost credibility",
-];
 
 function ScoreRing({ score }) {
 
@@ -136,33 +113,26 @@ export default function ResultPage() {
 
     if (!data) {
       router.push("/");
-      
+
     }
   }, [data])
-if (!data) return null;
+  if (!data) return null;
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {/* Top bar */}
-      <div className="max-w-5xl mx-auto mb-8 flex items-center justify-between">
-        <button
-          onClick={() => router.push("/")}
-          className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors duration-150"
-          style={{ fontWeight: 500 }}
-        >
-          <span>←</span>
-          <span>Back</span>
-        </button>
+      <div className="max-w-5xl mx-auto mb-8 flex items-center justify-center">
+       
         <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-2 shadow">
           <span className="text-lg">📄</span>
           <span className="text-gray-600 text-sm tracking-wide uppercase" style={{ letterSpacing: "0.08em" }}>Resume Analyzer</span>
         </div>
-        <button
+        {/* <button
           onClick={() => router.push("/export")}
           className="bg-black text-white px-4 py-2 rounded-xl text-sm hover:bg-gray-800 transition-colors duration-150 shadow"
           style={{ fontWeight: 500 }}
         >
           Export PDF
-        </button>
+        </button> */}
       </div>
 
       <div className="max-w-5xl mx-auto flex flex-col gap-6">
@@ -262,18 +232,18 @@ if (!data) return null;
           <div className="flex gap-3">
             <button
               onClick={() => router.push("/")}
-              className="bg-white text-black px-5 py-3 rounded-xl text-sm hover:bg-gray-100 transition-colors duration-150 shadow"
+              className="bg-white text-black px-5 py-3 rounded-xl text-sm hover:bg-gray-100 transition-colors duration-150 shadow cursor-pointer"
               style={{ fontWeight: 600 }}
             >
               Upload New Resume
             </button>
-            <button
+            {/* <button
               onClick={() => router.push("/export")}
               className="bg-gray-800 text-white px-5 py-3 rounded-xl text-sm hover:bg-gray-700 transition-colors duration-150 border border-gray-700"
               style={{ fontWeight: 600 }}
             >
               Export PDF
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

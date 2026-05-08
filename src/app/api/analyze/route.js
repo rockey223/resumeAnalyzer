@@ -17,6 +17,12 @@ export async function POST(request) {
       );
     }
 
+    if(file.type !== "application/pdf") {
+      return NextResponse.json(
+        { error: "Invalid file type. Please upload a PDF." },
+        { status: 400 },
+      );
+    }
     // Convert PDF file to buffer
     const arrayBuffer = await file.arrayBuffer();
     //const buffer = Buffer.from(arrayBuffer);
@@ -27,7 +33,6 @@ export async function POST(request) {
       verbosity: VerbosityLevel.WARNINGS,
     });
     const text = await parser.getText();
-    console.log(text);
     await parser.destroy();
 
     const client = new OpenAI({
@@ -72,7 +77,6 @@ Return ONLY this format:
       ],
     });
 
-    console.log("com", completion.choices[0].message.content);
     const clean = completion.choices[0].message.content
       .replace(/```json|```/g, "")
       .trim();
@@ -82,11 +86,9 @@ Return ONLY this format:
     try {
       parsed = JSON.parse(clean);
     } catch (err) {
-      console.log("JSON parse failed:", clean);
       parsed = clean;
     }
 
-    console.log("clean", parsed);
     // console.log("he", parsed.strengths);
 
     return NextResponse.json({
@@ -94,7 +96,6 @@ Return ONLY this format:
       message: "Resume analyzed successfully",
     });
   } catch (error) {
-    console.error("PDF parse error:", error);
     return NextResponse.json(
       { error: "An error occurred while processing the PDF" },
       { status: 500 },

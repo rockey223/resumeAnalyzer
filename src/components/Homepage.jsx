@@ -1,21 +1,22 @@
 'use client';
 import { removeReport, setReport } from "@/lib/actions/reportSlice";
-import axios from "axios";
+import axiosInstance from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import AdSenseAd from "./AdSenseAd";
 
 export function HomePage() {
   const router = useRouter();
   const [isDragging, setIsDragging] = useState(false);
   const [fileName, setFileName] = useState(null);
   const [file, setFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(removeReport());
-  },[])
+  }, [])
   const handleDragOver = (e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -46,27 +47,26 @@ export function HomePage() {
 
   const handleUpload = async () => {
     try {
+      setIsLoading(true);
+      setError(null);
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await axios.post("/api/analyze", formData, {
+      const res = await axiosInstance.post("/api/analyze", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      console.log(res);
-      if(res.status !== 200) {
-        alert("Failed to analyze resume. Please try again.");
-        return;
-      }
       const data = res.data;
       dispatch(setReport(data.data))
       router.push("/result");
-      // console.log(resdata);
     } catch (error) {
-      console.log(error);
-
+      console.log("error client", error.message);
+      setError(error.message || "Failed to analyze resume. Please try again.");
+    }
+    finally {
+      setIsLoading(false);
     }
 
   }
@@ -107,7 +107,7 @@ export function HomePage() {
           <input
             id="file-input"
             type="file"
-            accept=".pdf,.doc,.docx"
+            // accept=".pdf"
             className="hidden"
             onChange={handleFileChange}
           />
@@ -140,7 +140,7 @@ export function HomePage() {
                 <p className="text-gray-400 text-sm mt-1">or click to browse files</p>
               </div>
               <div className="flex items-center gap-2 mt-1">
-                {["PDF", "DOC", "DOCX"].map((fmt) => (
+                {["PDF"].map((fmt) => (
                   <span key={fmt} className="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-lg">
                     {fmt}
                   </span>
@@ -156,23 +156,27 @@ export function HomePage() {
           <span className="text-gray-400 text-sm">ready to analyze</span>
           <div className="flex-1 h-px bg-gray-100" />
         </div>
+        {
+          error && <p className="text-red-500 text-sm text-center">{error}</p>
+        }
 
         {/* CTA Button */}
         <button
           onClick={handleUpload}
+          disabled={!fileName || isLoading}
           className={`w-full bg-black text-white rounded-xl py-4 transition-all duration-200 hover:bg-gray-800 active:scale-95 ${!fileName ? "opacity-50 cursor-not-allowed" : "opacity-100 cursor-pointer shadow"
             }`}
-          disabled={!fileName}
+
           style={{ fontWeight: 600, fontSize: "1rem" }}
         >
-          {fileName ? "Analyze My Resume →" : "Upload a file to continue"}
+          {fileName ? isLoading ? "Analyzing..." : "Analyze My Resume →" : "Upload a file to continue"}
         </button>
 
         <p className="text-center text-gray-400 text-xs mt-4">
           Your data is never stored or shared.
         </p>
       </div>
-<AdSenseAd/>
+
       {/* Footer stats */}
       <div className="flex items-center gap-8 mt-10">
         {[
